@@ -44,4 +44,33 @@ public class InOrder {
         }
         return result;
     }
+
+    public List<Integer> MorrisInOrder(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null)
+            return result;
+        TreeNode cur = root;
+        while (cur != null) {
+            if (cur.left == null) {
+                result.add(cur.val);
+                cur = cur.right;
+            } else {
+                TreeNode mostRight = cur.left;
+                //找到最右节点
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null) {
+                    mostRight.right = cur;
+                    cur = cur.left;
+                }
+                if (mostRight.right == cur) {
+                    mostRight.right = null;
+                    result.add(cur.val);
+                    cur = cur.right;
+                }
+            }
+        }
+        return result;
+    }
 }

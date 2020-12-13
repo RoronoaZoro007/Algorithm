@@ -78,6 +78,17 @@ public class PostOrder {
         }
         return result;
     }
+
+    public List<Integer> MorrisPostOrder(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null)
+            return result;
+        TreeNode cur = root;
+        while (cur != null) {
+
+        }
+        return result;
+    }
 }
 
 
