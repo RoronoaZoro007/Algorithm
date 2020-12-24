@@ -1,5 +1,7 @@
 package DynamicProgramming;
 
+import java.math.BigDecimal;
+
 public class MaxProfit_2CntLimit {
 
     /**
@@ -16,9 +18,21 @@ public class MaxProfit_2CntLimit {
     public int maxProfit(int[] prices) {
         if (prices.length <= 1)
             return 0;
-        for (int i = 0; i < prices.length; i++) {
-
+        int firstBuy = -prices[0]; //当前这次为第一次购买的最大利润
+        int firstSale = 0; //当前这次为第一次出售的最大利润
+        int secondBuy = -prices[0]; //当前这次为第二次购买的最大利润
+        int secondSale = 0; //当前这次为第二次出售的最大利润
+        for (int i = 1; i < prices.length; i++) {
+            firstBuy = Math.max(-prices[i - 1], firstBuy);
+            firstSale = Math.max(firstBuy + prices[i], firstSale);
+            secondBuy = Math.max(firstSale - prices[i], secondBuy);
+            secondSale = Math.max(secondBuy + prices[i], secondSale);
         }
-        return 0;
+        return secondSale;
+    }
+
+    public static void main(String[] args) {
+        BigDecimal val = new BigDecimal(88);
+        System.out.println(val.setScale(2, BigDecimal.ROUND_HALF_UP));
     }
 }
