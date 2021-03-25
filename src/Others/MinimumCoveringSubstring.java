@@ -25,13 +25,55 @@ public class MinimumCoveringSubstring {
      * @param t
      * @return
      */
+    Map<Character, Integer> mapCnt = new HashMap<>();
+    Map<Character, Integer> mapRealCnt = new HashMap<>();
+
     public String minWindow(String s, String t) {
-        Map<Character, Integer> mapt = new HashMap<>();
         for (int i = 0; i < t.length(); i++) {
             char c = t.charAt(i);
-            mapt.put(c, mapt.getOrDefault(c, 0) + 1);
+            mapCnt.put(c, mapCnt.getOrDefault(c, 0) + 1);
         }
-        return "";
+        int posL = 0;
+        int sLen = s.length();
+        int nowPos = 0;
+        int resultLen = Integer.MAX_VALUE;
+        int resultL = -1;
+        int resultR = -1;
+        while (nowPos < sLen) {
+            char c = s.charAt(nowPos);
+            if (mapCnt.containsKey(c)) {
+                mapRealCnt.put(c, mapRealCnt.getOrDefault(c, 0) + 1);
+            }
+            while (checkIfValid() && posL <= nowPos) {
+                if (nowPos - posL + 1 < resultLen) {
+                    resultLen = nowPos - posL + 1;
+                    resultL = posL;
+                    resultR = nowPos;
+                }
+                char charL = s.charAt(posL);
+                if (mapCnt.containsKey(charL)) {
+                    mapRealCnt.put(charL, mapRealCnt.getOrDefault(charL, 0) - 1);
+                }
+                posL++;
+            }
+            nowPos++;
+        }
+        if (resultL == -1)
+            return "";
+        return s.substring(resultL, resultR + 1);
+    }
+
+    public boolean checkIfValid() {
+        for (Map.Entry<Character, Integer> entry : mapCnt.entrySet()) {
+            if (mapRealCnt.getOrDefault(entry.getKey(), 0) < entry.getValue())
+                return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        MinimumCoveringSubstring minimumCoveringSubstring = new MinimumCoveringSubstring();
+        System.out.println(minimumCoveringSubstring.minWindow("a", "a"));
     }
 
     public void test() {
