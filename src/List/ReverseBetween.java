@@ -42,7 +42,6 @@ public class ReverseBetween {
             while (nowPos!=null){
                 next=nowPos.next;
                 nowPos.next=leftPreNode;
-                leftPreNode.nex
             }
         } else {
             while(nowPos!=rightNode.next){
