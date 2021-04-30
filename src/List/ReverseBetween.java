@@ -27,39 +27,52 @@ public class ReverseBetween {
         ListNode temp = dummyHead;
         int pos = 0;
         while (temp != null) {
-            temp = temp.next;
-            pos++;
             if (pos == left - 1)
                 leftPreNode = temp;
             if (pos == right)
                 rightNode = temp;
+            temp = temp.next;
+            pos++;
         }
         if (leftPreNode == null)
             return head;
-        ListNode nowPos=leftPreNode.next;
+        ListNode leftNode = leftPreNode.next;
+        ListNode nowPos = leftPreNode.next;
+        leftPreNode.next = null;
+        ListNode pre;
         if (rightNode == null) {
-            ListNode next;
-            while (nowPos!=null){
-                next=nowPos.next;
-                nowPos.next=leftPreNode;
-            }
+            //如果右节点在链表外
+            pre = reverseList(nowPos);
+            leftPreNode.next = pre;
         } else {
-            while(nowPos!=rightNode.next){
-
-            }
+            //如果右节点在链表内
+            ListNode rightPostNode = rightNode.next;
+            rightNode.next = null;
+            pre = reverseList(nowPos);
+            leftPreNode.next = pre;
+            leftNode.next = rightPostNode;
         }
         return dummyHead.next;
     }
 
-    private ListNode reverse(ListNode leftNode) {
+    public static void main(String[] args) {
+        ReverseBetween reverseBetween=new ReverseBetween();
+        ListNode head=new ListNode(3);
+        ListNode tail=new ListNode(5);
+        head.next=tail;
+        reverseBetween.reverseBetween(head,1,2);
+    }
+
+    private ListNode reverseList(ListNode nowPos) {
         ListNode pre = null;
-        ListNode next = null;
-        while (leftNode != null) {
-            next = leftNode.next;
-            leftNode.next = pre;
-            pre = leftNode;
-            leftNode = next;
+        ListNode next;
+        while (nowPos != null) {
+            next = nowPos.next;
+            nowPos.next = pre;
+            pre = nowPos;
+            nowPos = next;
         }
         return pre;
     }
+
 }
