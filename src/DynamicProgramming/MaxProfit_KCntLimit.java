@@ -1,5 +1,7 @@
 package DynamicProgramming;
 
+import java.util.Arrays;
+
 public class MaxProfit_KCntLimit {
 
     /**
@@ -41,5 +43,35 @@ public class MaxProfit_KCntLimit {
             }
         }
         return maxProfit[k][1];
+    }
+
+    /**
+     * tip:可以看出实际的状态有3个，一个是第i天，完成了k笔交易，处于的状态是持有股票，还是不持有股票
+     * @param k
+     * @param prices
+     * @return
+     */
+    public int maxProfit_1(int k, int[] prices) {
+        if(prices==null||prices.length<=1||k<=0)
+            return 0;
+        //表示交易完成了k次（就是卖出k次了），且持有股票的最大值
+        int[][] hold=new int[prices.length][k+1];
+        //表示交易完成了k次，且持有股票的最大值
+        int[][] notHold=new int[prices.length][k+1];
+        hold[0][0]=-prices[0];
+        for(int i=1;i<=k;i++){
+            //取不到的值要设置一个非法的数值，最小值！！！
+            hold[0][i]=Integer.MIN_VALUE/3;
+            notHold[0][i]=Integer.MIN_VALUE/3;
+        }
+        for(int i=1;i<prices.length;i++){
+            //要更新完成次数为0的数值
+            hold[i][0]=Math.max(hold[i-1][0],-prices[i]);
+            for(int j=1;j<=k;j++){
+                hold[i][j]=Math.max(hold[i-1][j],notHold[i-1][j]-prices[i]);
+                notHold[i][j]=Math.max(notHold[i-1][j],hold[i-1][j-1]+prices[i]);
+            }
+        }
+        return Arrays.stream(notHold[prices.length-1]).max().getAsInt();
     }
 }
