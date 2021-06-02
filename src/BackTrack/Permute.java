@@ -114,8 +114,8 @@ public class Permute {
 
     boolean[] vis;
     public List<List<Integer>> permuteUnique_1(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        List<Integer> perm = new ArrayList<Integer>();
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> perm = new ArrayList<>();
         vis = new boolean[nums.length];
         Arrays.sort(nums);
         backtrack(nums, ans, 0, perm);

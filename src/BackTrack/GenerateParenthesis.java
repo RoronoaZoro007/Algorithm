@@ -1,6 +1,7 @@
 package BackTrack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GenerateParenthesis {
@@ -8,6 +9,14 @@ public class GenerateParenthesis {
     public static void main(String[] args) {
         GenerateParenthesis generateParenthesis = new GenerateParenthesis();
         System.out.println(generateParenthesis.generateParenthesis(3));
+        StringBuilder sb=new StringBuilder();
+        char[] arr=new char[10];
+        Arrays.fill(arr,'A');
+        sb.append(arr);
+        System.out.println(sb);
+        sb.delete(5,10);
+        System.out.println(sb);
+
     }
     List<String> result;
     static StringBuilder sb = new StringBuilder();
