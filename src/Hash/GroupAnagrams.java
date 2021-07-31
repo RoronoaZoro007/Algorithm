@@ -22,22 +22,17 @@ public class GroupAnagrams {
      */
     public List<List<String>> groupAnagrams(String[] strs) {
         HashMap<String, List<String>> tempMap = new HashMap<>();
-        for (int i = 0; i < strs.length; i++) {
-            char[] temp = strs[i].toCharArray();
+        for (String s : strs) {
+            char[] temp = s.toCharArray();
             Arrays.sort(temp);
             String str = String.valueOf(temp);
-            if (tempMap.containsKey(str)) {
-                tempMap.get(str).add(strs[i]);
-            } else {
-                List<String> strList = new ArrayList<>();
-                strList.add(strs[i]);
-                tempMap.put(str, strList);
-            }
+            List<String> strList = tempMap.getOrDefault(str, new ArrayList<>());
+            strList.add(s);
+            tempMap.put(str, strList);
         }
-        List<List<String>> result=new ArrayList<>();
-        Iterator iterator=tempMap.keySet().iterator();
-        while (iterator.hasNext()){
-            result.add(tempMap.get(iterator.next()));
+        List<List<String>> result = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : tempMap.entrySet()) {
+            result.add(new ArrayList<>(entry.getValue()));
         }
         return result;
     }

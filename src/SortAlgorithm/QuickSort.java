@@ -5,11 +5,6 @@ import java.util.Random;
 
 public class QuickSort {
 
-    public static void main(String[] args) {
-        QuickSort quickSort = new QuickSort();
-        System.out.println(Arrays.toString(quickSort.sortArray(new int[]{5,3,2,1,3,2,4,32,4,2324,54})));
-    }
-
     //快排
     public int[] sortArray(int[] nums) {
         if (nums == null || nums.length <= 1)
@@ -26,7 +21,8 @@ public class QuickSort {
         quickSort(nums, partition + 1, end);
     }
 
-    private int partition(int[] nums, int start, int end) {
+    //左边都小于等于它；右边都大于等于它
+    public int partition(int[] nums, int start, int end) {
         if (start >= end)
             return start;
         Random random = new Random();
@@ -50,5 +46,11 @@ public class QuickSort {
         int temp = nums[left];
         nums[left] = nums[right];
         nums[right] = temp;
+    }
+
+    public static void main(String[] args) {
+        QuickSort quickSort = new QuickSort();
+        System.out.println(quickSort.partition(new int[]{2,0,1,3,2,4,5,6,3},0,8));
+        System.out.println(Arrays.toString(quickSort.sortArray(new int[]{5,3,2,1,3,2,4,32,4,2324,54})));
     }
 }

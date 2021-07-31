@@ -1,4 +1,4 @@
-package BitRelsted;
+package BitRelated;
 
 public class ConvertInteger {
     /**

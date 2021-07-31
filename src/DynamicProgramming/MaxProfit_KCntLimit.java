@@ -25,7 +25,7 @@ public class MaxProfit_KCntLimit {
      */
 
     public static void main(String[] args) {
-        System.out.println(maxProfit(2, new int[]{3,2,6,5,0,3}));
+        System.out.println(maxProfit_3(2, new int[]{3,2,6,5,0,3}));
     }
 
     public static int maxProfit(int k, int[] prices) {
@@ -45,6 +45,30 @@ public class MaxProfit_KCntLimit {
             }
         }
         return maxProfit[k][1];
+    }
+
+    public static int maxProfit_3(int k, int[] prices) {
+        if(prices==null||prices.length<=1)
+            return 0;
+        //表示已经买了1次和买了2次的最大利润
+        int[] buy=new int[k];
+        //表示已经卖了1次和卖了两次的最大利润
+        int[] sale=new int[k];
+        //此时不限制是否在后一天卖出，因为当天买入再当天卖出的利润为0
+        //因此在这种情况下，可以第一天买入，卖出，再买入，卖出，所以要初始化所有的初始状态
+        //股票在第0天无论我们买入1次或者2次，其利润都是-price[0]
+        //股票在第0天无论我们卖出1次或者2次，其利润都是0（因为买入卖出价格相同）
+        Arrays.fill(buy,-prices[0]);
+        Arrays.fill(sale,0);
+        for(int i=0;i<prices.length;i++){
+            buy[0]=Math.max(buy[0],-prices[i]);
+            sale[0]=Math.max(buy[0]+prices[i],sale[0]);
+            for(int j=1;j<k;j++){
+                buy[j]=Math.max(sale[j-1]-prices[i],buy[j]);
+                sale[j]=Math.max(buy[j]+prices[i],sale[j]);
+            }
+        }
+        return sale[k-1];
     }
 
     /**

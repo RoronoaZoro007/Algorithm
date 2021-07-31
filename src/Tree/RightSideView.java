@@ -1,9 +1,6 @@
 package Tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class RightSideView {
 
@@ -58,6 +55,30 @@ public class RightSideView {
         }
         return result;
     }
+
+    public List<Integer> rightSideView_2(TreeNode root){
+        List<Integer> result=new ArrayList<>();
+        if(root==null)
+            return result;
+        Deque<TreeNode> queue=new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            int size=queue.size();
+            result.add(queue.peekLast().val);
+            TreeNode temp;
+            for (int i = 0; i < size; i++) {
+                temp=queue.pollFirst();
+                if(temp.left!=null){
+                    queue.offerLast(temp.left);
+                }
+                if(temp.right!=null){
+                    queue.offerLast(temp.right);
+                }
+            }
+        }
+        return result;
+    }
+
 
     public void getListByTree(TreeNode root, int depth) {
         if (root == null)
