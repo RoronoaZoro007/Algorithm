@@ -51,9 +51,32 @@ public class LongestConsecutive {
         return maxLen;
     }
 
+    public int longestConsecutive_2(int[] nums) {
+        if (nums == null || nums.length <= 0)
+            return 0;
+        HashSet<Integer> numSet = new HashSet<>();
+        for (int num : nums) {
+            numSet.add(num);
+        }
+        Iterator<Integer> iterator = numSet.iterator();
+        int maxLen = 1;
+        while (iterator.hasNext()) {
+            int temp = iterator.next();
+            if (!numSet.contains(temp - 1)) {
+                int len = 1;
+                while (numSet.contains(temp + 1)) {
+                    len++;
+                    temp++;
+                }
+                maxLen = Math.max(maxLen, len);
+            }
+        }
+        return maxLen;
+    }
+
     public static void main(String[] args) {
-        LongestConsecutive longestConsecutive=new LongestConsecutive();
-        System.out.println(longestConsecutive.longestConsecutive(new int[]{100,4,200,1,3,2}));
+        LongestConsecutive longestConsecutive = new LongestConsecutive();
+        System.out.println(longestConsecutive.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
     }
 
 }
